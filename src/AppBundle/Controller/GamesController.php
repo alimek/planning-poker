@@ -27,7 +27,6 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         $dm->flush();
 
         $view = $this->view($game);
-        $view->setFormat('json');
 
         return $this->handleView($view);
     }
