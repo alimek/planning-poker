@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Document\Game;
 use AppBundle\Form\GameType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -18,7 +19,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
 
     /**
      * @param Request $request
-     * @return Form
+     * @return Form|Game
      */
     public function postAction(Request $request)
     {
