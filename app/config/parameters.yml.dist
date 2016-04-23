@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    mongodb.database:  planningpoker
+    mongodb.server:    mongodb://localhost:27017
+
+    rabbitmq.host:     'spotted-monkey.rmq.cloudamqp.com'
+    rabbitmq.port:     5672
+    rabbitmq.user:     'fjnfmkuv'
+    rabbitmq.password: ***REMOVED***
+    rabbitmq.vhost:    'fjnfmkuv'
