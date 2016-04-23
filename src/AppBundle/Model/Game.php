@@ -12,7 +12,7 @@ class Game
     /**
      * @var string
      */
-    protected $hash;
+    protected $name;
 
     /**
      * @return int
@@ -25,24 +25,27 @@ class Game
     /**
      * @return string
      */
-    public function getHash()
+    public function getName()
     {
-        return $this->hash;
+        return $this->name;
     }
 
     /**
-     * @param string $hash
-     * @return $this
+     * @param string $name
      */
-    public function setHash($hash)
+    public function setName($name)
     {
-        $this->hash = $hash;
+        $this->name = $name;
     }
 
-    public static function create()
+    /**
+     * @param string $name
+     * @return Game
+     */
+    public static function create($name)
     {
         $game = new self();
-        $game->setHash(uniqid('', true));
+        $game->setName($name);
         return $game;
     }
 
