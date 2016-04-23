@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "id": "game",
+    "title": "Game object",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        }
+    }
+}
