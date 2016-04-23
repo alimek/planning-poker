@@ -2,12 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Document\Game;
 use AppBundle\Form\GameType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Model;
 
 class GamesController extends FOSRestController implements ClassResourceInterface
 {
@@ -15,27 +16,30 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     {
     }
 
+    /**
+     * @param Request $request
+     * @return Form
+     */
     public function postAction(Request $request)
     {
-
-        $game = new Game();
         $form = $this->createForm(GameType::class);
         $form->submit($request->request->all());
-
         if ($form->isValid()) {
-            $game = Game::create($request->get('name'));
+            /** @var Model\Game $gameModel */
+            $gameModel = $form->getData();
+            $game = $gameModel->toDocument();
+
             $dm = $this->get('doctrine_mongodb')->getManager();
             $dm->persist($game);
             $dm->flush();
+
+            return $this->handleView($this->view($game, 200));
         }
 
-        $view = $this->view($game);
-
-        return $this->handleView($view);
+        return $this->handleView($this->view($form));
     }
 
     public function getAction($gameId)
     {
     }
-
 }

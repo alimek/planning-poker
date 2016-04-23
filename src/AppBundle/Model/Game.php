@@ -2,25 +2,14 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Document;
+
 class Game
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
     /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
@@ -39,14 +28,10 @@ class Game
     }
 
     /**
-     * @param string $name
-     * @return Game
+     * @return Document\Game
      */
-    public static function create($name)
+    public function toDocument()
     {
-        $game = new self();
-        $game->setName($name);
-        return $game;
+        return Document\Game::fromGameModel($this);
     }
-
 }

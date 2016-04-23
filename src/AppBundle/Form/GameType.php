@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Model\Game;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GameType extends AbstractType
@@ -15,9 +17,16 @@ class GameType extends AbstractType
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Game::class
+        ]);
     }
 
     public function getName()
