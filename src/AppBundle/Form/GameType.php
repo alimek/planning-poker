@@ -19,4 +19,10 @@ class GameType extends AbstractType
             ])
         ;
     }
+
+    public function getName()
+    {
+        return 'game';
+    }
+
 }

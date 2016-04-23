@@ -17,7 +17,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: false
     validation:      { enable_annotations: true }
     serializer:      { enable_annotations: true }
     templating:
@@ -105,6 +105,9 @@ doctrine_mongodb:
     document_managers:
         default:
             auto_mapping: true
+
+#fos_rest:
+#    disable_csrf_role:    anonymous
 
 #    service:
 #        inflector: app.util.singularize_inflector
