@@ -17,14 +17,12 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     {
     }
 
-    /**
-     * @Rest\View()
-     */
     public function postAction(Request $request)
     {
 
+        $game = new Game();
         $form = $this->createForm(GameType::class);
-        $form->submit($request->request);
+        $form->submit($request->request->all());
 
         if ($form->isValid()) {
             $game = Game::create($request->get('name'));
