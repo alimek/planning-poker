@@ -34,10 +34,12 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
             $dm->persist($game);
             $dm->flush();
 
-            return $this->handleView($this->view($game, 200));
+            $response = $this->handleView($this->view($game, 200));
+        } else {
+            $response = $this->handleView($this->view($form));
         }
 
-        return $this->handleView($this->view($form));
+        return $response;
     }
 
     public function getAction($gameId)
