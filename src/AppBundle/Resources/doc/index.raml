@@ -1,0 +1,56 @@
+#%RAML 0.8
+title: Planning Poker API
+version: 1.0.0
+mediaType: application/json
+schemas:
+    game-create: !include game-create.schema.json
+    game: !include game.schema.json
+    games: !include games.schema.json
+/games:
+    displayName: Games
+    description: A collection of games
+    post:
+        description: The POST operation starts new game.
+        body:
+            application/json:
+                schema: game-create
+                example: |
+                    {
+                        "name": "MyNewGame"
+                    }
+    get:
+        description: The GET operation shows collection of all games.
+        responses:
+            200:
+                body:
+                    application/json:
+                        schema: games
+                        example: |
+                            [
+                                {
+                                    "id": 1,
+                                    "name": "MyNewGame1"
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "MyNewGame2"
+                                }
+                            ]
+    /{gameId}:
+        displayName: Game
+        description: Specific game
+        uriParameters:
+            gameId:
+                displayName: Game ID
+                type: integer
+        get:
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: game
+                            example: |
+                                {
+                                    "id": 1,
+                                    "name": "MyNewGame"
+                                }
