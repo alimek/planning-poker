@@ -2,5 +2,5 @@ AppBundle\Document\Game:
     fields:
         id:
             id:  true
-        hash:
+        name:
             type: string

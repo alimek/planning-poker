@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Document\Game;
+use AppBundle\Form\GameType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Request;
 
 class GamesController extends FOSRestController implements ClassResourceInterface
 {
@@ -18,13 +20,18 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     /**
      * @Rest\View()
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
-        $game = new Game();
-        $game->setHash('asdasas');
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($game);
-        $dm->flush();
+
+        $form = $this->createForm(GameType::class);
+        $form->submit($request->request);
+
+        if ($form->isValid()) {
+            $game = Game::create($request->get('name'));
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $dm->persist($game);
+            $dm->flush();
+        }
 
         $view = $this->view($game);
 

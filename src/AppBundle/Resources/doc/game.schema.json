@@ -4,7 +4,7 @@
     "title": "Game object",
     "type": "object",
     "properties": {
-        "uuid": {
+        "id": {
             "type": "string"
         },
         "name": {
