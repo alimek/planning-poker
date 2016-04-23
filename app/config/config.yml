@@ -67,3 +67,41 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     '%rabbitmq.host%'
+            port:     '%rabbitmq.port%'
+            user:     '%rabbitmq.user%'
+            password: '%rabbitmq.password%'
+            vhost:    '%rabbitmq.vhost%'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+    producers:
+        upload_picture:
+            connection:       default
+            exchange_options: {name: 'upload-picture', type: direct}
+    consumers:
+        upload_picture:
+            connection:       default
+            exchange_options: {name: 'upload-picture', type: direct}
+            queue_options:    {name: 'upload-picture'}
+            callback:         app.consumer.upload_picture_consumer
+
+doctrine_mongodb:
+    connections:
+        default:
+            server: '%mongodb.server%'
+            options: {}
+    default_database: '%mongodb.database%'
+    document_managers:
+        default:
+            auto_mapping: true
