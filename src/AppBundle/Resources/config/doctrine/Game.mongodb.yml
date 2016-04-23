@@ -1,0 +1,6 @@
+AppBundle\Document\Game:
+    fields:
+        id:
+            id:  true
+        hash:
+            type: string
