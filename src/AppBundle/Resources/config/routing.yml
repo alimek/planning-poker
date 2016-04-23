@@ -4,3 +4,4 @@ app_homepage:
 app_game:
     type:     rest
     resource: AppBundle\Controller\GamesController
+    defaults: { _format: json }

@@ -106,16 +106,6 @@ doctrine_mongodb:
         default:
             auto_mapping: true
 
-#fos_rest:
-#    routing_loader:
-#        default_format: json
-#    view:
-#        templating_formats:
-#            json: false
-#    serializer:
-#        serialize_null: true
-
-
 #    service:
 #        inflector: app.util.singularize_inflector
 #fos_rest:
