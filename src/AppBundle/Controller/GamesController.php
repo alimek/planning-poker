@@ -11,10 +11,20 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Model;
 
+/**
+ * Class GamesController
+ * @package AppBundle\Controller
+ */
 class GamesController extends FOSRestController implements ClassResourceInterface
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function cgetAction()
     {
+        $em = $this->get('doctrine_mongodb')->getManager();
+        $games = $em->getRepository(Game::class)->findAll();
+        return $this->handleView($this->view($games, 200));
     }
 
     /**
@@ -42,7 +52,14 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         return $response;
     }
 
+    /**
+     * @param string $gameId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getAction($gameId)
     {
+        $em = $this->get('doctrine_mongodb')->getManager();
+        $game = $em->getRepository(Game::class)->find($gameId);
+        return $this->handleView($this->view($game, 200));
     }
 }
