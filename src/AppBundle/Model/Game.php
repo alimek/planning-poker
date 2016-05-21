@@ -34,4 +34,8 @@ class Game
     {
         return Document\Game::fromGameModel($this);
     }
+    
+    public function toMessage() {
+        return json_encode($this);
+    }
 }
