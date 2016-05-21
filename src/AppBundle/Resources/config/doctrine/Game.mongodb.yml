@@ -4,3 +4,6 @@ AppBundle\Document\Game:
             id:  true
         name:
             type: string
+    embedMany:
+        userStories:
+            targetDocument: UserStory
