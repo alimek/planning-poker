@@ -44,6 +44,15 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
             $dm->persist($game);
             $dm->flush();
 
+//            try {
+                $producer = $this->get('old_sound_rabbit_mq.game_producer');
+                $producer->setContentType('application/json');
+                $producer->setRoutingKey('game.create');
+                $producer->publish($gameModel->toMessage());
+//            } catch (\Exception $e) {
+//                $this->get('logger')->error($e->getMessage());
+//            }
+
             $response = $this->handleView($this->view($game, 200));
         } else {
             $response = $this->handleView($this->view($form));
