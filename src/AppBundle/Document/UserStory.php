@@ -2,24 +2,17 @@
 
 namespace AppBundle\Document;
 
-use AppBundle\Model;
-use Doctrine\ODM\MongoDB\PersistentCollection;
-
-class Game
+class UserStory
 {
     /**
      * @var string
      */
     protected $id;
+    
     /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @var PersistentCollection
-     */
-    protected $userStories;
 
     /**
      * @param string $name
@@ -53,13 +46,4 @@ class Game
         $this->name = $name;
     }
 
-    /**
-     * @param Model\Game $gameModel
-     *
-     * @return Game
-     */
-    public static function fromGameModel(Model\Game $gameModel)
-    {
-        return new self($gameModel->getName());
-    }
 }

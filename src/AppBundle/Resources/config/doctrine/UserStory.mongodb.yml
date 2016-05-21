@@ -1,0 +1,7 @@
+AppBundle\Document\UserStory:
+    type: embeddedDocument
+    fields:
+        id:
+            id:  true
+        name:
+            type: string
