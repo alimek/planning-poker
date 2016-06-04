@@ -89,7 +89,7 @@ old_sound_rabbit_mq:
     producers:
         game:
             connection:       default
-            exchange_options: { name: 'game', type: topic, durable: true }
+            exchange_options: { name: 'game', type: fanout, durable: true }
 
 doctrine_mongodb:
     connections:
