@@ -3,7 +3,7 @@
 namespace AppBundle\Document;
 
 use AppBundle\Model;
-use Doctrine\ODM\MongoDB\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Game
 {
@@ -17,7 +17,7 @@ class Game
     protected $name;
 
     /**
-     * @var PersistentCollection
+     * @var Collection
      */
     protected $userStories;
 
@@ -26,7 +26,7 @@ class Game
      */
     public function __construct($name)
     {
-        $this->setName($name);
+        $this->name = $name;
     }
 
     /**
@@ -43,23 +43,5 @@ class Game
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param Model\Game $gameModel
-     *
-     * @return Game
-     */
-    public static function fromGameModel(Model\Game $gameModel)
-    {
-        return new self($gameModel->getName());
     }
 }

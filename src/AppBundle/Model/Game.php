@@ -32,10 +32,6 @@ class Game
      */
     public function toDocument()
     {
-        return Document\Game::fromGameModel($this);
-    }
-    
-    public function toMessage() {
-        return json_encode($this);
+        return new Document\Game($this->getName());
     }
 }
