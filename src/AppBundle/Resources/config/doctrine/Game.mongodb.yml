@@ -1,4 +1,6 @@
 AppBundle\Document\Game:
+    repositoryClass: AppBundle\Repositories\GameRepository
+    collection: game
     fields:
         id:
             id:  true

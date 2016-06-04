@@ -21,8 +21,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      */
     public function cgetAction()
     {
-        $em = $this->get('doctrine_mongodb')->getManager();
-        $games = $em->getRepository(Game::class)->findAll();
+        $games = $this->get('app.repositories.game_repository')->findAll();
 
         return $this->handleView($this->view($games, 200));
     }
@@ -40,18 +39,12 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
             $gameModel = $form->getData();
             $game = $gameModel->toDocument();
 
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($game);
-            $dm->flush();
+            $this->get('app.repositories.game_repository')->save($game);
 
-//            try {
-//                $producer = $this->get('old_sound_rabbit_mq.game_producer');
-//                $producer->setContentType('application/json');
-//                $producer->setRoutingKey('game.create');
-//                $producer->publish($gameModel->toMessage());
-//            } catch (\Exception $e) {
-//                $this->get('logger')->error($e->getMessage());
-//            }
+            $producer = $this->get('old_sound_rabbit_mq.game_producer');
+            $producer->setContentType('application/json');
+            $producer->setRoutingKey('game.create');
+            $producer->publish($this->get('serializer')->serialize($game, 'json'));
 
             return $this->handleView($this->view($game, 200));
         }
@@ -65,8 +58,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      */
     public function getAction($gameId)
     {
-        $em = $this->get('doctrine_mongodb')->getManager();
-        $game = $em->getRepository(Game::class)->find($gameId);
+        $game = $this->get('app.repositories.game_repository')->find($gameId);
 
         return $this->handleView($this->view($game, 200));
     }

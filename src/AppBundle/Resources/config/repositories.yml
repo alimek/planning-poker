@@ -1,0 +1,8 @@
+services:
+    app.repositories.game_repository:
+        class: AppBundle\Repositories\GameRepository
+        factory:
+            - '@doctrine_mongodb.odm.default_document_manager'
+            - 'getRepository'
+        arguments:
+            - 'AppBundle\Document\Game'
