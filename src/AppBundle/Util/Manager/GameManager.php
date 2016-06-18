@@ -41,6 +41,7 @@ class GameManager
     public function startGame(Game $game)
     {
         $game->setStatus(Game::STATUS_STARTED);
+        $game->setCurrentTask($game->getTasks()->first());
         $this->gameRepository->save($game);
         $this->producer->publish($this->serializer->serialize($game, 'json'));
     }
