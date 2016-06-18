@@ -12,5 +12,5 @@ AppBundle\Document\Game:
         tasks:
             targetDocument: Task
     embedOne:
-        task:
+        currentTask:
             targetDocument: Task

@@ -2,3 +2,8 @@ app_game:
     type:     rest
     resource: AppBundle\Controller\GamesController
     defaults: { _format: json }
+
+app_task:
+    type:     rest
+    resource: AppBundle\Controller\TasksController
+    defaults: { _format: json }
