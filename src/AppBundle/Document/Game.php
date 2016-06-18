@@ -3,6 +3,7 @@
 namespace AppBundle\Document;
 
 use AppBundle\Model;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Game
@@ -17,9 +18,24 @@ class Game
     protected $name;
 
     /**
+     * @var ArrayCollection
+     */
+    protected $players;
+
+    /**
      * @var Collection
      */
-    protected $userStories;
+    protected $tasks;
+
+    /**
+     * @var Task
+     */
+    protected $currentTask;
+
+    /**
+     * @var string
+     */
+    protected $status;
 
     /**
      * @param string $name
