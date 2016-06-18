@@ -52,7 +52,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
      */
     public function it_can_be_converted_to_Document_Game()
     {
-        $document = $this->sut->toDocument();
+        $document = Document\Game::fromModel($this->sut);
 
         $this->assertInstanceOf(Document\Game::class, $document);
     }
@@ -64,7 +64,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
     public function it_passes_name_to_Document_Game()
     {
         $this->sut->setName('foo bar');
-        $document = $this->sut->toDocument();
+        $document = Document\Game::fromModel($this->sut);
 
         $this->assertSame($this->sut->getName(), $document->getName());
     }
