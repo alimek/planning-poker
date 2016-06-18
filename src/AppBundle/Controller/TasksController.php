@@ -9,9 +9,10 @@ use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\ODM\MongoDB\LockException;
 
 /**
  * @package AppBundle\Controller
@@ -21,7 +22,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class TasksController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @return Task[]
+     * @param $gameId
+     * @return Response
+     * @throws LockException
      */
     public function cgetTasksAction($gameId)
     {
@@ -36,7 +39,9 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
 
     /**
      * @param Request $request
-     * @return Form|Task
+     * @param $gameId
+     * @return Response
+     * @throws LockException
      */
     public function postTaskAction(Request $request, $gameId)
     {
@@ -66,25 +71,48 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @param $gameId
      * @param $taskId
-     * @return Task
+     * @return Response
+     * @throws LockException
      */
     public function getTaskAction($gameId, $taskId)
     {
+//        $game = $this->get('app.repositories.game_repository')->find($gameId);
+//
+//        if (!$game instanceof Game) {
+//            throw new NotFoundHttpException();
+//        }
+
+//        $task = $game->getTasks()->filter(function(Task $task) use ($taskId) {
+//            if ($task->getId()===$taskId) {
+//                return true;
+//            }
+//
+//            return false;
+//        });
+
+        $task = $this->get('app.repositories.game_repository')->getTask($gameId, $taskId);
+
+        return $this->handleView($this->view($task, 200));
+    }
+
+    /**
+     * @param Request $request
+     * @param $gameId
+     * @param $taskId
+     */
+    public function patchFlipTaskAction(Request $request, $gameId, $taskId)
+    {
+        // TODO
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
         if (!$game instanceof Game) {
             throw new NotFoundHttpException();
         }
 
-        $task = $game->getTasks()->filter(function(Task $task) use ($taskId) {
-            if ($task->getId()===$taskId) {
-                return true;
-            }
 
-            return false;
-        });
 
-        return $this->handleView($this->view($task, 200));
     }
+    
 }
