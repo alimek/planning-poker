@@ -7,3 +7,6 @@ AppBundle\Document\Game:
         name:
             expose: true
             type: string
+        tasks:
+            expose: true
+            type: AppBundle\Document\Task
