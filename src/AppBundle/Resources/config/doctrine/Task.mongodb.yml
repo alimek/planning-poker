@@ -1,0 +1,7 @@
+AppBundle\Document\Task:
+    type: embeddedDocument
+    fields:
+        id:
+            id:  true
+        name:
+            type: string
