@@ -2,7 +2,7 @@
 
 namespace AppBundle\Document;
 
-class UserStory
+class Task
 {
     /**
      * @var string

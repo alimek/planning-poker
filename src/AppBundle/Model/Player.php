@@ -2,12 +2,33 @@
 
 namespace AppBundle\Model;
 
-class UserStory
+class Player
 {
     /**
      * @var string
      */
+    protected $guid;
+
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @return string
+     */
+    public function getGuid()
+    {
+        return $this->guid;
+    }
+
+    /**
+     * @param string $guid
+     */
+    public function setGuid($guid)
+    {
+        $this->guid = $guid;
+    }
 
     /**
      * @return string

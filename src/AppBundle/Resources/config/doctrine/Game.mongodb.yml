@@ -6,6 +6,11 @@ AppBundle\Document\Game:
             id:  true
         name:
             type: string
+        players:
+            type: collection
     embedMany:
-        userStories:
-            targetDocument: UserStory
+        tasks:
+            targetDocument: Task
+    embedOne:
+        task:
+            targetDocument: Task
