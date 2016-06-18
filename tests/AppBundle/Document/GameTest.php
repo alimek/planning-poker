@@ -40,4 +40,14 @@ class GameTest extends \PHPUnit_Framework_TestCase
             [ 'foo bar' ],
         ];
     }
+
+    /**
+     * @test
+     * @depends it_is_instantiable
+     */
+    public function it_has_status_new()
+    {
+        $sut = new Game('aaa');
+        $this->assertSame(Game::STATUS_NEW, $sut->getStatus());
+    }
 }
