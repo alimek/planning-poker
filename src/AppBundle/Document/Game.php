@@ -44,4 +44,13 @@ class Game
     {
         return $this->name;
     }
+
+    /**
+     * @param Model\Game $game
+     * @return Game
+     */
+    public static function fromModel(Model\Game $game)
+    {
+        return new self($game->getName());
+    }
 }
