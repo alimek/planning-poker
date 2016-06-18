@@ -1,3 +1,11 @@
 services:
     app.util.singularize_inflector:
         class: AppBundle\Util\SingularizeInflector
+    app.util_consumer.task_consumer:
+        class: AppBundle\Util\Consumer\TaskConsumer
+    app.util_manager.game_manager:
+        class: AppBundle\Util\Manager\GameManager
+        arguments:
+            - '@old_sound_rabbit_mq.game_producer'
+            - '@app.repositories.game_repository'
+            - '@serializer'

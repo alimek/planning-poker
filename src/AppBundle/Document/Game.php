@@ -2,12 +2,17 @@
 
 namespace AppBundle\Document;
 
-use AppBundle\Model;
+use AppBundle\Model\Player;
+use AppBundle\Model\Game as GameModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Game
 {
+    const STATUS_NEW = 'new';
+    const STATUS_STARTED = 'started';
+    const STATUS_FINISHED = 'finished';
+
     /**
      * @var string
      */
@@ -43,6 +48,7 @@ class Game
     public function __construct($name)
     {
         $this->name = $name;
+        $this->status = Game::STATUS_NEW;
     }
 
     /**
@@ -62,11 +68,76 @@ class Game
     }
 
     /**
-     * @param Model\Game $game
+     * @param GameModel $game
      * @return Game
      */
-    public static function fromModel(Model\Game $game)
+    public static function fromModel(GameModel $game)
     {
         return new self($game->getName());
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @param Player $player
+     */
+    public function addPlayer(Player $player)
+    {
+        $this->players->add($player);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param Task $task
+     */
+    public function addTask(Task $task)
+    {
+        $this->tasks->add($task);
+    }
+
+    /**
+     * @return Task
+     */
+    public function getCurrentTask()
+    {
+        return $this->currentTask;
+    }
+
+    /**
+     * @param Task $currentTask
+     */
+    public function setCurrentTask($currentTask)
+    {
+        $this->currentTask = $currentTask;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+    
 }

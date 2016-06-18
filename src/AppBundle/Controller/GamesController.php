@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Model;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @package AppBundle\Controller
@@ -61,5 +62,23 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
         return $this->handleView($this->view($game, 200));
+    }
+
+    /**
+     * @param string $gameId
+     * @return Game
+     */
+    public function patchStartAction($gameId)
+    {
+        $game = $this->get('app.repositories.game_repository')->find($gameId);
+        
+        if (!$game instanceof Game) {
+            throw new NotFoundHttpException();
+        }
+
+        $this->get('app.util_manager.game_manager')->startGame($game);
+
+        return $this->handleView($this->view([], 200));
+
     }
 }
