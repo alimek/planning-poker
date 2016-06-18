@@ -26,12 +26,4 @@ class Game
     {
         $this->name = $name;
     }
-
-    /**
-     * @return Document\Game
-     */
-    public function toDocument()
-    {
-        return new Document\Game($this->getName());
-    }
 }
