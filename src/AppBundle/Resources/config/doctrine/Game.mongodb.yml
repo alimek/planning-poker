@@ -10,9 +10,8 @@ AppBundle\Document\Game:
             type: collection
         status:
             type: string
+        currentTaskId:
+            type: string
     embedMany:
         tasks:
-            targetDocument: Task
-    embedOne:
-        currentTask:
             targetDocument: Task

@@ -33,9 +33,9 @@ class Game
     protected $tasks;
 
     /**
-     * @var Task
+     * @var string
      */
-    protected $currentTask;
+    protected $currentTaskId;
 
     /**
      * @var string
@@ -109,19 +109,34 @@ class Game
     }
 
     /**
+     * @param string $taskId
      * @return Task
      */
-    public function getCurrentTask()
+    public function getTaskById($taskId)
     {
-        return $this->currentTask;
+        return $this->getTasks()->filter(function(Task $task) use ($taskId) {
+            if ($task->getId()===$taskId) {
+                return true;
+            }
+
+            return false;
+        })->first();
     }
 
     /**
-     * @param Task $currentTask
+     * @return Task
      */
-    public function setCurrentTask($currentTask)
+    public function getCurrentTaskId()
     {
-        $this->currentTask = $currentTask;
+        return $this->currentTaskId;
+    }
+
+    /**
+     * @param Task $currentTaskId
+     */
+    public function setCurrentTaskId($currentTaskId)
+    {
+        $this->currentTaskId = $currentTaskId;
     }
 
     /**
@@ -138,6 +153,14 @@ class Game
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return Task
+     */
+    public function getCurrentTask()
+    {
+        return $this->getTaskById($this->getCurrentTaskId());
     }
 
 }

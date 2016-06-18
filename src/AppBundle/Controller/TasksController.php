@@ -78,21 +78,17 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      */
     public function getTaskAction($gameId, $taskId)
     {
-//        $game = $this->get('app.repositories.game_repository')->find($gameId);
-//
-//        if (!$game instanceof Game) {
-//            throw new NotFoundHttpException();
-//        }
+        $game = $this->get('app.repositories.game_repository')->find($gameId);
 
-//        $task = $game->getTasks()->filter(function(Task $task) use ($taskId) {
-//            if ($task->getId()===$taskId) {
-//                return true;
-//            }
-//
-//            return false;
-//        });
+        if (!$game instanceof Game) {
+            throw new NotFoundHttpException();
+        }
 
-        $task = $this->get('app.repositories.game_repository')->getTask($gameId, $taskId);
+        $task = $game->getTaskById($taskId);
+
+        if (!$task instanceof Task) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->handleView($this->view($task, 200));
     }
