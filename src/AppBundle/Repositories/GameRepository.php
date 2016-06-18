@@ -16,10 +16,20 @@ class GameRepository extends DocumentRepository
         $this->getDocumentManager()->flush();
     }
 
-//    public function getTask($taskId)
-//    {
-//        $this->createQueryBuilder()
-//            ->field('task')
-//    }
+    public function getTask($gameId, $taskId)
+    {
+        $qb = $this->createQueryBuilder();
 
+        $query = $qb
+            ->select('tasks.$')
+            ->field('tasks')->elemMatch(
+                $qb->expr()->field('_id')->equals(new \MongoId($taskId))
+            )
+            ->field('_id')->equals(new \MongoId($gameId))
+            ->getQuery();
+
+        $task = $query->getSingleResult();
+
+        return $task;
+    }
 }
