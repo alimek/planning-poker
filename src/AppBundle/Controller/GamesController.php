@@ -4,9 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Document\Game;
 use AppBundle\Form\GameType;
+use AppBundle\Model;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Model;
