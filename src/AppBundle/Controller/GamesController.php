@@ -37,7 +37,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         if ($form->isValid()) {
             /** @var Model\Game $gameModel */
             $gameModel = $form->getData();
-            $game = $gameModel->toDocument();
+            $game = Game::fromModel($gameModel);
 
             $this->get('app.repositories.game_repository')->save($game);
 
