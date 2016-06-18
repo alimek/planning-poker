@@ -139,5 +139,5 @@ class Game
     {
         $this->status = $status;
     }
-    
+
 }

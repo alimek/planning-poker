@@ -10,7 +10,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
