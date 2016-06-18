@@ -2,13 +2,15 @@
 
 namespace AppBundle\Document;
 
+use AppBundle\Model;
+
 class Task
 {
     /**
      * @var string
      */
     protected $id;
-    
+
     /**
      * @var string
      */
@@ -46,4 +48,12 @@ class Task
         $this->name = $name;
     }
 
+    /**
+     * @param Model\Task $task
+     * @return Task
+     */
+    public static function fromModel(Model\Task $task)
+    {
+        return new self($task->getName());
+    }
 }

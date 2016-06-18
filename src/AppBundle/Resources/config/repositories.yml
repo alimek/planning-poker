@@ -6,3 +6,10 @@ services:
             - 'getRepository'
         arguments:
             - 'AppBundle\Document\Game'
+    app.repositories.task_repository:
+        class: AppBundle\Repositories\TaskRepository
+        factory:
+            - '@doctrine_mongodb.odm.default_document_manager'
+            - 'getRepository'
+        arguments:
+            - 'AppBundle\Document\Task'
