@@ -33,12 +33,12 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "jms/serializer-bundle": "^1.1",
         "nelmio/cors-bundle": "^1.4",
-        "mongofill/mongofill": "dev-master",
-        "symfony/phpunit-bridge": "^3.1"
+        "mongofill/mongofill": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "4.8.*",
+        "symfony/phpunit-bridge": "^3.1"
     },
     "scripts": {
         "post-install-cmd": [
