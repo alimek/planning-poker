@@ -89,12 +89,13 @@ old_sound_rabbit_mq:
     producers:
         game:
             connection:       default
-            exchange_options: { name: 'game', type: fanout, durable: true }
+            exchange_options: { name: 'game', type: direct, durable: true }
+            queue_options: { name: 'games' }
 
     consumers:
         read_tasks:
             connection: default
-            exchange_options: { name: 'task', type: fanout }
+            exchange_options: { name: 'task', type: direct }
             queue_options: { name: 'task.create' }
             callback: app.util_consumer.task_consumer
 

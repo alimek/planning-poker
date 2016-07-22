@@ -9,4 +9,4 @@ AppBundle\Document\Game:
             type: string
         tasks:
             expose: true
-            type: AppBundle\Document\Task
+            type: array<AppBundle\Document\Task>

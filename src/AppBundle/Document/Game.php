@@ -28,7 +28,7 @@ class Game
     protected $players;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      */
     protected $tasks;
 

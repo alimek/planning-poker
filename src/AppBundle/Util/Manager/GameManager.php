@@ -43,7 +43,7 @@ class GameManager
         $game->setStatus(Game::STATUS_STARTED);
         $game->setCurrentTaskId($game->getTasks()->first()->getId());
         $this->gameRepository->save($game);
-        $this->producer->publish($this->serializer->serialize($game, 'json'));
+        $this->producer->publish($this->serializer->serialize($game, 'json'), 'game.started');
     }
 
 }
