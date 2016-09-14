@@ -1,0 +1,12 @@
+AppBundle\Document\Vote:
+    type: embeddedDocument
+    fields:
+        id:
+            id:  true
+        player:
+            type: string
+        value:
+            type: integer
+    embedOne:
+        task:
+            type: Task

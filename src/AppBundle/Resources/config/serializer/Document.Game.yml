@@ -7,6 +7,9 @@ AppBundle\Document\Game:
         name:
             expose: true
             type: string
+        status:
+            expose: true
+            type: string
         tasks:
             expose: true
             type: array<AppBundle\Document\Task>
