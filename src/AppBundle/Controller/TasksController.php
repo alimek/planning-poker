@@ -9,6 +9,7 @@ use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,6 +23,11 @@ use Doctrine\ODM\MongoDB\LockException;
 class TasksController extends FOSRestController implements ClassResourceInterface
 {
     /**
+     * @ApiDoc(
+     *     description="Get tasks for given game",
+     *     resource=true,
+     *     output="Task[]"
+     * )
      * @param $gameId
      * @return Response
      * @throws LockException
@@ -38,6 +44,14 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Create task in game",
+     *     input={
+     *          "class"="AppBundle\Form\TaskType",
+     *          "name"=""
+     *     },
+     *     output="Task"
+     * )
      * @param Request $request
      * @param $gameId
      * @return Response
@@ -71,6 +85,9 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Get single task"
+     * )
      * @param $gameId
      * @param $taskId
      * @return Response
@@ -94,11 +111,14 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Flip task (not finished)"
+     * )
      * @param Request $request
      * @param $gameId
      * @param $taskId
      */
-    public function patchFlipTaskAction(Request $request, $gameId, $taskId)
+    public function patchFlipAction(Request $request, $gameId, $taskId)
     {
         // TODO
         $game = $this->get('app.repositories.game_repository')->find($gameId);

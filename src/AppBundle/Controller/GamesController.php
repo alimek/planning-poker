@@ -11,6 +11,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @package AppBundle\Controller
@@ -18,6 +19,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class GamesController extends FOSRestController implements ClassResourceInterface
 {
     /**
+     * @ApiDoc(
+     *     resource=true,
+     *     description="Get all games"
+     * )
      * @return Game[]
      */
     public function cgetAction()
@@ -28,6 +33,14 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Create new game",
+     *     input={
+     *          "class"="AppBundle\Form\GameType",
+     *          "name" = ""
+     *     },
+     *     output="Game"
+     * )
      * @param Request $request
      * @return Form|Game
      */
@@ -53,6 +66,11 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Get single game",
+     *     resource=true,
+     *     output="Game"
+     * )
      * @param string $gameId
      * @return Game
      */
@@ -64,6 +82,9 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * @ApiDoc(
+     *     description="Start game"
+     * )
      * @param string $gameId
      * @return Game
      */
