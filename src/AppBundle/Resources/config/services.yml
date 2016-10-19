@@ -9,25 +9,14 @@ services:
             - '@old_sound_rabbit_mq.game_producer'
             - '@app.repositories.game_repository'
             - '@serializer'
-#    app.util_listener.task_subscriber:
-#        class: AppBundle\Util\Listener\TaskSubscriber
-#        arguments:
-#            - '@old_sound_rabbit_mq.task_producer'
-
-    app.util_client.rabbit_client:
-        class: AppBundle\Util\Client\RabbitClient
-        arguments:
-            - '%rabbitmq.host%'
-            - '%rabbitmq.vhost%'
-            - '%rabbitmq.user%'
-            - '%rabbitmq.password%'
-
-    app.util_client.channel.task:
-        class: AppBundle\Util\Client\ChannelFactory
-        factory:   ['@app.util_client.channel_factory', create]
-        arguments:
-            - '@app.util_client.rabbit_client'
-            - 'task'
 
     app.util_client.channel_factory:
         class: AppBundle\Util\Client\ChannelFactory
+
+    app.util_listener.game_created_subscriber:
+        class: AppBundle\Util\Listener\GameCreatedSubscriber
+        arguments:
+          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
+          - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }

@@ -34,7 +34,7 @@
         "jms/serializer-bundle": "^1.1",
         "nelmio/cors-bundle": "^1.4",
         "mongofill/mongofill": "dev-master",
-        "bunny/bunny": "@dev"
+        "bunny/bunny": "@dev",
         "nelmio/api-doc-bundle": "^2.13"
     },
     "require-dev": {

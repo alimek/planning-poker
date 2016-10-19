@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Document\Game;
+use AppBundle\Event\GameEvent;
+use AppBundle\Events;
 use AppBundle\Form\GameType;
 use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -55,9 +57,8 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
 
             $this->get('app.repositories.game_repository')->save($game);
 
-            $producer = $this->get('old_sound_rabbit_mq.game_producer');
-            $producer->setContentType('application/json');
-            $producer->publish($this->get('serializer')->serialize($game, 'json'), 'game.create');
+            $gameEvent = new GameEvent($game);
+            $this->get('event_dispatcher')->dispatch(Events::GAME_CREATED, $gameEvent);
 
             return $this->handleView($this->view($game, 200));
         }

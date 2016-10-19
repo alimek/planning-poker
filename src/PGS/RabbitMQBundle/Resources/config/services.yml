@@ -1,0 +1,13 @@
+services:
+  pgs_rabbit_mq.service.rabbit_mqclient:
+    class: PGS\RabbitMQBundle\Service\RabbitMQClient
+    arguments:
+      - '%pgs-rabbitmq-host%'
+      - '%pgs-rabbitmq-vhost%'
+      - '%pgs-rabbitmq-user%'
+      - '%pgs-rabbitmq-password%'
+
+  pgs_rabbit_mq.service.rabbit_mqpublisher:
+    class: PGS\RabbitMQBundle\Service\RabbitMQPublisher
+    arguments:
+      - '@pgs_rabbit_mq.service.rabbit_mqclient'
