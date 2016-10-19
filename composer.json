@@ -33,7 +33,8 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "jms/serializer-bundle": "^1.1",
         "nelmio/cors-bundle": "^1.4",
-        "mongofill/mongofill": "dev-master"
+        "mongofill/mongofill": "dev-master",
+        "bunny/bunny": "@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
