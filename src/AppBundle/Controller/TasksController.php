@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Document\Game;
 use AppBundle\Document\Task;
+use AppBundle\Event\TaskEvent;
+use AppBundle\Events;
 use AppBundle\Form\TaskType;
 use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -77,6 +79,9 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             $game->addTask($task);
 
             $this->get('app.repositories.game_repository')->save($game);
+            
+            $taskEvent = new TaskEvent($game, $task);
+            $this->get('event_dispatcher')->dispatch(Events::TASK_CREATED, $taskEvent);
 
             return $this->handleView($this->view($task, 200));
         }

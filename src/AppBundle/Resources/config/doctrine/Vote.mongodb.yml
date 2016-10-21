@@ -1,4 +1,4 @@
-AppBundle\Document\Vote:
+AppBundle\Model\Vote:
     type: embeddedDocument
     fields:
         id:

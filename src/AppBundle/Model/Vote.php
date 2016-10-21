@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Document;
+namespace AppBundle\Model;
 
 class Vote
 {

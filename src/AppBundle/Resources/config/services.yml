@@ -20,3 +20,11 @@ services:
           - '@serializer'
         tags:
             - { name: kernel.event_subscriber }
+
+    app.util_listener.task_created_subscriber:
+        class: AppBundle\Util\Listener\TaskCreatedSubscriber
+        arguments:
+          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
+          - '@jms_serializer.serializer'
+        tags:
+            - { name: kernel.event_subscriber }

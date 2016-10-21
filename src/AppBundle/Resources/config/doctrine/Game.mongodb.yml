@@ -1,4 +1,4 @@
-AppBundle\Document\Game:
+AppBundle\Model\Game:
     repositoryClass: AppBundle\Repositories\GameRepository
     collection: game
     fields:

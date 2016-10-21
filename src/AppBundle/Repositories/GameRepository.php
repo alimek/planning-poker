@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repositories;
 
-use AppBundle\Document\Game;
+use AppBundle\Model\Game;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class GameRepository extends DocumentRepository

@@ -1,4 +1,4 @@
-AppBundle\Document\Task:
+AppBundle\Model\Task:
     type: embeddedDocument
     fields:
         id:
