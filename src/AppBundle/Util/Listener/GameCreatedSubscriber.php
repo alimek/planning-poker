@@ -46,7 +46,7 @@ class GameCreatedSubscriber implements EventSubscriberInterface
     public function onGameCreated(GameEvent $event)
     {
         $this->publisher->publish(
-            'game',
+            'poker',
             'game.created',
             $this->serializer->serialize($event->getGame(), 'json')
         );

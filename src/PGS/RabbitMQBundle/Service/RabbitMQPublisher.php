@@ -2,7 +2,7 @@
 
 namespace PGS\RabbitMQBundle\Service;
 
-use Bunny\Channel;
+use PGS\RabbitMQBundle\ExchangeType;
 
 class RabbitMQPublisher
 {
@@ -25,6 +25,8 @@ class RabbitMQPublisher
     public function publish($exchange, $queue, $message, array $headers = [])
     {
         $channel = $this->client->getClient()->channel();
+
+        $channel->exchangeDeclare($exchange, ExchangeType::TOPIC);
         $channel->queueDeclare($queue);
 
         $channel->publish($message, $headers, $exchange, $queue);

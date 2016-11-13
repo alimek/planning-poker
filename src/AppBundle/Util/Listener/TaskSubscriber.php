@@ -2,24 +2,25 @@
 
 namespace AppBundle\Util\Listener;
 
+use AppBundle\Event\TaskEvent;
 use AppBundle\Events;
-use AppBundle\Model\Task;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use JMS\Serializer\Serializer;
+use PGS\RabbitMQBundle\Service\RabbitMQPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TaskSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ProducerInterface
-     */
-    protected $producer;
+    protected $serializer;
+    protected $publisher;
 
     /**
-     * @param ProducerInterface $producer
+     * @param RabbitMQPublisher $publisher
+     * @param Serializer $serializer
      */
-    public function __construct(ProducerInterface $producer)
+    public function __construct(RabbitMQPublisher $publisher, Serializer $serializer)
     {
-        $this->producer = $producer;
+        $this->publisher = $publisher;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -33,11 +34,18 @@ class TaskSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Task $task
+     * @param TaskEvent $event
      */
-    public function onTaskCreate(Task $task)
+    public function onTaskCreate(TaskEvent $event)
     {
-        
+        $serializedTask = $this->serializer->serialize($event->getTask(), 'json');
+
+        $this->publisher->publish(
+            'poker',
+            'task.created',
+            $serializedTask
+        );
+
     }
         
 }

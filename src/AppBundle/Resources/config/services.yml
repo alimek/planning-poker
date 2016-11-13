@@ -1,14 +1,16 @@
 services:
     app.util.singularize_inflector:
         class: AppBundle\Util\SingularizeInflector
-    app.util_consumer.task_consumer:
-        class: AppBundle\Util\Consumer\TaskConsumer
-    app.util_manager.game_manager:
-        class: AppBundle\Util\Manager\GameManager
-        arguments:
-            - '@old_sound_rabbit_mq.game_producer'
-            - '@app.repositories.game_repository'
-            - '@serializer'
+
+#    app.util_consumer.task_consumer:
+#        class: AppBundle\Util\Consumer\TaskConsumer
+
+#    app.util_manager.game_manager:
+#        class: AppBundle\Util\Manager\GameManager
+#        arguments:
+#            - '@old_sound_rabbit_mq.game_producer'
+#            - '@app.repositories.game_repository'
+#            - '@serializer'
 
     app.util_client.channel_factory:
         class: AppBundle\Util\Client\ChannelFactory
@@ -18,5 +20,13 @@ services:
         arguments:
           - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
           - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app.util_listener.task_subscriber:
+        class: AppBundle\Util\Listener\TaskSubscriber
+        arguments:
+          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
+          - '@jms_serializer.serializer'
         tags:
             - { name: kernel.event_subscriber }

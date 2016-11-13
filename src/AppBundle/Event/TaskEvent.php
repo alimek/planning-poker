@@ -2,7 +2,7 @@
 
 namespace AppBundle\Event;
 
-use AppBundle\Model\Task;
+use AppBundle\Document\Task;
 use Symfony\Component\EventDispatcher\Event;
 
 class TaskEvent extends Event
