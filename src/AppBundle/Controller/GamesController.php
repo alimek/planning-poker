@@ -10,11 +10,10 @@ use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\Form\Form;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @package AppBundle\Controller
@@ -26,7 +25,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     resource=true,
      *     description="Get all games"
      * )
-     * @return Game[] | Response
+     * @return Response
      */
     public function cgetAction()
     {
@@ -45,7 +44,8 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param Request $request
-     * @return Form | Game | Response
+     *
+     * @return Response
      */
     public function postAction(Request $request)
     {
@@ -74,7 +74,8 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param string $gameId
-     * @return Game | Response
+     *
+     * @return Response
      */
     public function getAction($gameId)
     {
@@ -88,12 +89,13 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     description="Start game"
      * )
      * @param string $gameId
-     * @return Game | Response
+     *
+     * @return Response
      */
     public function patchStartAction($gameId)
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
-        
+
         if (!$game instanceof Game) {
             throw new NotFoundHttpException();
         }
@@ -105,6 +107,5 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         $this->get('event_dispatcher')->dispatch(Events::GAME_STARTED, $gameEvent);
 
         return $this->handleView($this->view([], 200));
-
     }
 }
