@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -25,7 +26,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     resource=true,
      *     description="Get all games"
      * )
-     * @return Game[]
+     * @return Game[] | Response
      */
     public function cgetAction()
     {
@@ -44,7 +45,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param Request $request
-     * @return Form|Game
+     * @return Form | Game | Response
      */
     public function postAction(Request $request)
     {
@@ -73,7 +74,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param string $gameId
-     * @return Game
+     * @return Game | Response
      */
     public function getAction($gameId)
     {
@@ -87,7 +88,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     description="Start game"
      * )
      * @param string $gameId
-     * @return Game
+     * @return Game | Response
      */
     public function patchStartAction($gameId)
     {
@@ -97,7 +98,11 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
             throw new NotFoundHttpException();
         }
 
-        $this->get('app.util_manager.game_manager')->startGame($game);
+        $game->startGame();
+        $this->get('app.repositories.game_repository')->save($game);
+
+        $gameEvent = new GameEvent($game);
+        $this->get('event_dispatcher')->dispatch(Events::GAME_STARTED, $gameEvent);
 
         return $this->handleView($this->view([], 200));
 

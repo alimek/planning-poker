@@ -2,6 +2,7 @@
 
 namespace AppBundle\Event;
 
+use AppBundle\Document\Game;
 use AppBundle\Document\Task;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -13,18 +14,29 @@ class TaskEvent extends Event
     protected $task;
 
     /**
-     * @param Task $task
+     * @var Game
      */
-    public function __construct(Task $task)
-    {
-        $this->task = $task;
-    }
+    protected $game;
 
     /**
-     * @return Task
+     * @param Task $task
+     * @param Game $game
      */
-    public function getTask()
+    public function __construct(Task $task, Game $game)
+    {
+        $this->task = $task;
+        $this->game = $game;
+    }
+
+    public function getTask(): Task
     {
         return $this->task;
     }
+
+    public function getGame(): Game
+    {
+        return $this->game;
+    }
+
+
 }

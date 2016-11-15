@@ -2,8 +2,8 @@
 
 namespace AppBundle\Document;
 
-use AppBundle\Model\Player;
 use AppBundle\Model\Game as GameModel;
+use AppBundle\Model\Player;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -161,6 +161,11 @@ class Game
     public function getCurrentTask()
     {
         return $this->getTaskById($this->getCurrentTaskId());
+    }
+
+    public function startGame()
+    {
+        $this->setStatus(self::STATUS_STARTED);
     }
 
 }

@@ -6,4 +6,5 @@ final class ExchangeType
 {
     const TOPIC = 'topic';
     const DIRECT = 'direct';
+    const FANOUT = 'fanout';
 }

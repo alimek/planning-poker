@@ -80,7 +80,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             
             $this->get('app.repositories.game_repository')->save($game);
 
-            $taskEvent = new TaskEvent($task);
+            $taskEvent = new TaskEvent($task, $game);
             $this->container->get('event_dispatcher')->dispatch(Events::TASK_CREATED, $taskEvent);
 
             return $this->handleView($this->view($task, 200));
