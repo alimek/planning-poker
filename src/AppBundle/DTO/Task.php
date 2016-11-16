@@ -32,6 +32,11 @@ class Task
         $this->gameId = $gameId;
     }
 
+    /**
+     * @param TaskEvent $event
+     *
+     * @return Task
+     */
     public static function createFromEvent(TaskEvent $event): Task
     {
         return new self($event->getTask()->getId(), $event->getTask()->getName(), $event->getGame()->getId());
