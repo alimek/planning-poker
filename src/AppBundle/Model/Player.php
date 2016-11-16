@@ -17,7 +17,7 @@ class Player
     /**
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid()
     {
         return $this->guid;
     }
@@ -33,7 +33,7 @@ class Player
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
