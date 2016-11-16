@@ -17,7 +17,7 @@ class Player
     /**
      * @return string
      */
-    public function getGuid()
+    public function getGuid(): string
     {
         return $this->guid;
     }
@@ -25,7 +25,7 @@ class Player
     /**
      * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(string $guid)
     {
         $this->guid = $guid;
     }
@@ -33,7 +33,7 @@ class Player
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -41,7 +41,7 @@ class Player
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }

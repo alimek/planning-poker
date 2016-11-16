@@ -27,7 +27,7 @@ class TaskSubscriber implements EventSubscriberInterface
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Events::TASK_CREATED => 'onTaskCreate',
@@ -47,7 +47,6 @@ class TaskSubscriber implements EventSubscriberInterface
             'task.created',
             $serializedTask
         );
-
     }
         
 }

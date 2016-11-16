@@ -25,7 +25,7 @@ class Task
      * @param string $name
      * @param string $gameId
      */
-    private function __construct($id, $name, $gameId)
+    private function __construct(string $id, string $name, string $gameId)
     {
         $this->id = $id;
         $this->name = $name;

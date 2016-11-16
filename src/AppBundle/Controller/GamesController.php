@@ -27,7 +27,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      * )
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(): Response
     {
         $games = $this->get('app.repositories.game_repository')->findAll();
 
@@ -47,7 +47,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *
      * @return Response
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request): Response
     {
         $form = $this->createForm(GameType::class);
         $form->submit($request->request->all());
@@ -77,7 +77,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *
      * @return Response
      */
-    public function getAction($gameId)
+    public function getAction(string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
@@ -92,7 +92,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *
      * @return Response
      */
-    public function patchStartAction($gameId)
+    public function patchStartAction(string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 

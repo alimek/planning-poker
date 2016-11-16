@@ -5,7 +5,6 @@ namespace AppBundle\Document;
 use AppBundle\Model\Game as GameModel;
 use AppBundle\Model\Player;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 class Game
 {
@@ -45,7 +44,7 @@ class Game
     /**
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
         $this->status = Game::STATUS_NEW;
@@ -54,7 +53,7 @@ class Game
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -62,7 +61,7 @@ class Game
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -71,7 +70,7 @@ class Game
      * @param GameModel $game
      * @return Game
      */
-    public static function fromModel(GameModel $game)
+    public static function fromModel(GameModel $game): Game
     {
         return new self($game->getName());
     }
@@ -79,7 +78,7 @@ class Game
     /**
      * @return ArrayCollection
      */
-    public function getPlayers()
+    public function getPlayers(): ArrayCollection
     {
         return $this->players;
     }
@@ -93,9 +92,9 @@ class Game
     }
 
     /**
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getTasks()
+    public function getTasks(): ArrayCollection
     {
         return $this->tasks;
     }
@@ -112,7 +111,7 @@ class Game
      * @param string $taskId
      * @return Task
      */
-    public function getTaskById($taskId)
+    public function getTaskById(string $taskId): Task
     {
         return $this->getTasks()->filter(function(Task $task) use ($taskId) {
             if ($task->getId()===$taskId) {
@@ -124,9 +123,9 @@ class Game
     }
 
     /**
-     * @return Task
+     * @return string
      */
-    public function getCurrentTaskId()
+    public function getCurrentTaskId(): string
     {
         return $this->currentTaskId;
     }
@@ -134,7 +133,7 @@ class Game
     /**
      * @param Task $currentTaskId
      */
-    public function setCurrentTaskId($currentTaskId)
+    public function setCurrentTaskId(Task $currentTaskId)
     {
         $this->currentTaskId = $currentTaskId;
     }
@@ -142,7 +141,7 @@ class Game
     /**
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -150,7 +149,7 @@ class Game
     /**
      * @param string $status
      */
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
     }
@@ -158,7 +157,7 @@ class Game
     /**
      * @return Task
      */
-    public function getCurrentTask()
+    public function getCurrentTask(): Task
     {
         return $this->getTaskById($this->getCurrentTaskId());
     }

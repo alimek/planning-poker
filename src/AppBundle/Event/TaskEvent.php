@@ -28,11 +28,17 @@ class TaskEvent extends Event
         $this->game = $game;
     }
 
+    /**
+     * @return Task
+     */
     public function getTask(): Task
     {
         return $this->task;
     }
 
+    /**
+     * @return Game
+     */
     public function getGame(): Game
     {
         return $this->game;

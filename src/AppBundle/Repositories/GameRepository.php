@@ -16,7 +16,13 @@ class GameRepository extends DocumentRepository
         $this->getDocumentManager()->flush();
     }
 
-    public function getTask($gameId, $taskId)
+    /**
+     * @param string $gameId
+     * @param string $taskId
+     *
+     * @return Task
+     */
+    public function getTask(string $gameId, string $taskId)
     {
         $qb = $this->createQueryBuilder();
 
