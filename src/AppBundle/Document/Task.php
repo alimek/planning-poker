@@ -19,7 +19,7 @@ class Task
     /**
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->setName($name);
     }
@@ -27,7 +27,7 @@ class Task
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -35,7 +35,7 @@ class Task
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -43,7 +43,7 @@ class Task
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -52,7 +52,7 @@ class Task
      * @param Model\Task $task
      * @return Task
      */
-    public static function fromModel(Model\Task $task)
+    public static function fromModel(Model\Task $task): Task
     {
         return new self($task->getName());
     }

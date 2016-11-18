@@ -30,11 +30,11 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      *     resource=true,
      *     output="Task[]"
      * )
-     * @param $gameId
+     * @param string $gameId
      * @return Response
      * @throws LockException
      */
-    public function cgetTasksAction($gameId)
+    public function cgetTasksAction(string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
@@ -55,11 +55,11 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      *     output="Task"
      * )
      * @param Request $request
-     * @param $gameId
+     * @param string $gameId
      * @return Response
      * @throws LockException
      */
-    public function postTaskAction(Request $request, $gameId)
+    public function postTaskAction(Request $request, string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
@@ -80,7 +80,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             
             $this->get('app.repositories.game_repository')->save($game);
 
-            $taskEvent = new TaskEvent($task);
+            $taskEvent = new TaskEvent($task, $game);
             $this->container->get('event_dispatcher')->dispatch(Events::TASK_CREATED, $taskEvent);
 
             return $this->handleView($this->view($task, 200));
@@ -93,12 +93,14 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      * @ApiDoc(
      *     description="Get single task"
      * )
-     * @param $gameId
-     * @param $taskId
+     * @param string $gameId
+     * @param string $taskId
+     *
      * @return Response
+     *
      * @throws LockException
      */
-    public function getTaskAction($gameId, $taskId)
+    public function getTaskAction(string $gameId, string $taskId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
@@ -120,10 +122,10 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      *     description="Flip task (not finished)"
      * )
      * @param Request $request
-     * @param $gameId
-     * @param $taskId
+     * @param string $gameId
+     * @param string $taskId
      */
-    public function patchFlipAction(Request $request, $gameId, $taskId)
+    public function patchFlipAction(Request $request, string $gameId, string $taskId): Response
     {
         // TODO
         $game = $this->get('app.repositories.game_repository')->find($gameId);

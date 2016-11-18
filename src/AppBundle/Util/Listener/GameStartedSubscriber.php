@@ -1,18 +1,22 @@
 <?php
-
 namespace AppBundle\Util\Listener;
 
-use AppBundle\DTO\Task;
-use AppBundle\Event\TaskEvent;
+use AppBundle\Event\GameEvent;
 use AppBundle\Events;
 use JMS\Serializer\Serializer;
 use PGS\RabbitMQBundle\Service\RabbitMQPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class TaskSubscriber implements EventSubscriberInterface
+class GameStartedSubscriber implements EventSubscriberInterface
 {
-    protected $serializer;
-    protected $publisher;
+    /**
+     * @var RabbitMQPublisher
+     */
+    private $publisher;
+    /**
+     * @var Serializer
+     */
+    private $serializer;
 
     /**
      * @param RabbitMQPublisher $publisher
@@ -25,28 +29,24 @@ class TaskSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function getSubscribedEvents(): array
+    public static function getSubscribedEvents()
     {
         return [
-            Events::TASK_CREATED => 'onTaskCreate',
+            Events::GAME_STARTED => 'onGameStarted',
         ];
     }
 
     /**
-     * @param TaskEvent $event
+     * @param GameEvent $event
      */
-    public function onTaskCreate(TaskEvent $event)
+    public function onGameStarted(GameEvent $event)
     {
-        $task = Task::createFromEvent($event);
-        $serializedTask = $this->serializer->serialize($task, 'json');
-
         $this->publisher->publish(
             'poker',
-            'task.created',
-            $serializedTask
+            'game.started',
+            $this->serializer->serialize($event->getGame(), 'json')
         );
     }
-        
 }

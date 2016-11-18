@@ -23,6 +23,14 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    app.util_listener.game_started_subscriber:
+        class: AppBundle\Util\Listener\GameStartedSubscriber
+        arguments:
+          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
+          - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+
     app.util_listener.task_subscriber:
         class: AppBundle\Util\Listener\TaskSubscriber
         arguments:

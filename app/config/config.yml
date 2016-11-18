@@ -97,6 +97,6 @@ nelmio_cors:
 
 pgs_rabbit_mq:
     host: '%rabbitmq.host%:%rabbitmq.port%'
-    vhost: %rabbitmq.vhost%
-    user: %rabbitmq.user%
-    password: %rabbitmq.password%
+    vhost: '%rabbitmq.vhost%'
+    user: '%rabbitmq.user%'
+    password: '%rabbitmq.password%'

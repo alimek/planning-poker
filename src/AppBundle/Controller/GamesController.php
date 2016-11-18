@@ -10,10 +10,10 @@ use AppBundle\Model;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @package AppBundle\Controller
@@ -25,9 +25,9 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     resource=true,
      *     description="Get all games"
      * )
-     * @return Game[]
+     * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(): Response
     {
         $games = $this->get('app.repositories.game_repository')->findAll();
 
@@ -44,9 +44,10 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param Request $request
-     * @return Form|Game
+     *
+     * @return Response
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request): Response
     {
         $form = $this->createForm(GameType::class);
         $form->submit($request->request->all());
@@ -73,9 +74,10 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     output="Game"
      * )
      * @param string $gameId
-     * @return Game
+     *
+     * @return Response
      */
-    public function getAction($gameId)
+    public function getAction(string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
@@ -87,19 +89,23 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
      *     description="Start game"
      * )
      * @param string $gameId
-     * @return Game
+     *
+     * @return Response
      */
-    public function patchStartAction($gameId)
+    public function patchStartAction(string $gameId): Response
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
-        
+
         if (!$game instanceof Game) {
             throw new NotFoundHttpException();
         }
 
-        $this->get('app.util_manager.game_manager')->startGame($game);
+        $game->startGame();
+        $this->get('app.repositories.game_repository')->save($game);
+
+        $gameEvent = new GameEvent($game);
+        $this->get('event_dispatcher')->dispatch(Events::GAME_STARTED, $gameEvent);
 
         return $this->handleView($this->view([], 200));
-
     }
 }

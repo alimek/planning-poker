@@ -29,6 +29,8 @@ class RabbitMQPublisher
         $channel->exchangeDeclare($exchange, ExchangeType::TOPIC);
         $channel->queueDeclare($queue);
 
+        $channel->queueBind($queue, $exchange);
+
         $channel->publish($message, $headers, $exchange, $queue);
     }
 }

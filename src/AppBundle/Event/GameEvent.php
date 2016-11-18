@@ -23,7 +23,7 @@ class GameEvent extends Event
     /**
      * @return Game
      */
-    public function getGame()
+    public function getGame(): Game
     {
         return $this->game;
     }
