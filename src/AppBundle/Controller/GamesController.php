@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Document\Game;
+use AppBundle\Document\Player;
 use AppBundle\Event\GameEvent;
+use AppBundle\Event\PlayerEvent;
 use AppBundle\Events;
 use AppBundle\Form\GameType;
 use AppBundle\Model;
@@ -31,7 +33,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     {
         $games = $this->get('app.repositories.game_repository')->findAll();
 
-        return $this->handleView($this->view($games, 200));
+        return $this->handleView($this->view($games, Response::HTTP_OK));
     }
 
     /**
@@ -61,10 +63,33 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
             $gameEvent = new GameEvent($game);
             $this->get('event_dispatcher')->dispatch(Events::GAME_CREATED, $gameEvent);
 
-            return $this->handleView($this->view($game, 200));
+            return $this->handleView($this->view($game, Response::HTTP_OK));
         }
 
         return $this->handleView($this->view($form));
+    }
+
+    /**
+     * @ApiDoc(
+     *     description="Get players for given game",
+     *     resource=true,
+     *     output="Player[]"
+     * )
+     * @param $gameId
+     *
+     * @return Response
+     */
+    public function cgetPlayersAction($gameId): Response
+    {
+        $game = $this->get('app.repositories.game_repository')->find($gameId);
+
+        if (!$game instanceof Game) {
+            throw new NotFoundHttpException();
+        }
+
+        $players = $this->get('app.repositories.player_repository')->getAllPlayersByGame($game);
+
+        return $this->handleView($this->view($players, Response::HTTP_OK));
     }
 
     /**
@@ -81,7 +106,7 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
     {
         $game = $this->get('app.repositories.game_repository')->find($gameId);
 
-        return $this->handleView($this->view($game, 200));
+        return $this->handleView($this->view($game, Response::HTTP_OK));
     }
 
     /**
@@ -106,6 +131,35 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         $gameEvent = new GameEvent($game);
         $this->get('event_dispatcher')->dispatch(Events::GAME_STARTED, $gameEvent);
 
-        return $this->handleView($this->view([], 200));
+        return $this->handleView($this->view([], Response::HTTP_OK));
     }
-}
+
+    /**
+     * @param string $gameId
+     * @param string $playerGUID
+     *
+     * @return Response
+     */
+    public function addPlayerAction(string $gameId, string $playerGUID): Response
+    {
+        $game = $this->get('app.repositories.game_repository')->find($gameId);
+
+        if(!$game instanceof Game) {
+            throw new NotFoundHttpException('Game not found');
+        }
+
+        $player = $this->get('app.repositories.player_repository')->getPlayerByGUID($playerGUID);
+
+        if(!$player instanceof Player) {
+            throw new NotFoundHttpException('Player not found');
+        }
+
+        $game->addPlayer($player);
+        $this->get('app.repositories.game_repository')->save($game);
+
+        $playerEvent = new PlayerEvent($player, $game);
+        $this->container->get('event_dispatcher')->dispatch(Events::PLAYER_JOINED_GAME, $playerEvent);
+
+        return $this->handleView($this->view([], Response::HTTP_OK));
+    }
+ }

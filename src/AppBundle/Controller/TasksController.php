@@ -42,7 +42,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             throw new NotFoundHttpException();
         }
 
-        return $this->handleView($this->view($game->getTasks(), 200));
+        return $this->handleView($this->view($game->getTasks(), Response::HTTP_OK));
     }
 
     /**
@@ -83,7 +83,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             $taskEvent = new TaskEvent($task, $game);
             $this->container->get('event_dispatcher')->dispatch(Events::TASK_CREATED, $taskEvent);
 
-            return $this->handleView($this->view($task, 200));
+            return $this->handleView($this->view($task, Response::HTTP_OK));
         }
 
         return $this->handleView($this->view($form));
@@ -114,7 +114,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             throw new NotFoundHttpException();
         }
 
-        return $this->handleView($this->view($task, 200));
+        return $this->handleView($this->view($task, Response::HTTP_OK));
     }
 
     /**

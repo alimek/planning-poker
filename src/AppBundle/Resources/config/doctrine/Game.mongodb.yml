@@ -6,8 +6,6 @@ AppBundle\Document\Game:
             id:  true
         name:
             type: string
-        players:
-            type: collection
         status:
             type: string
         currentTaskId:
@@ -15,3 +13,7 @@ AppBundle\Document\Game:
     embedMany:
         tasks:
             targetDocument: Task
+    referenceMany:
+        players:
+            targetDocument: AppBundle\Document\Player
+            cascade: all
