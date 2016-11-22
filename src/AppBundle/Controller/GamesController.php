@@ -160,6 +160,6 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
         $playerEvent = new PlayerEvent($player, $game);
         $this->container->get('event_dispatcher')->dispatch(Events::PLAYER_JOINED_GAME, $playerEvent);
 
-        return $this->handleView($this->view([], Response::HTTP_OK));
+        return $this->handleView($this->view($player, Response::HTTP_OK));
     }
  }

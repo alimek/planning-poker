@@ -47,6 +47,8 @@ class Game
     {
         $this->name = $name;
         $this->status = Game::STATUS_NEW;
+        $this->players = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     /**

@@ -26,7 +26,7 @@ class RabbitMQPublisher
     {
         $channel = $this->client->getClient()->channel();
 
-        $channel->exchangeDeclare($exchange, ExchangeType::TOPIC);
+        $channel->exchangeDeclare($exchange, ExchangeType::TOPIC, false, true);
         $channel->queueDeclare($queue);
 
         $channel->queueBind($queue, $exchange);
