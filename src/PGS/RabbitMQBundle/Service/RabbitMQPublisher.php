@@ -2,7 +2,7 @@
 
 namespace PGS\RabbitMQBundle\Service;
 
-use PGS\RabbitMQBundle\ExchangeType;
+use PGS\RabbitMQBundle\Publisher\PGSMessage;
 
 class RabbitMQPublisher
 {
@@ -11,26 +11,24 @@ class RabbitMQPublisher
      */
     private $client;
 
+    //TODO: dodać service zarządzający exchange'ami
+
+
+    /**
+     * @param RabbitMQClient $client
+     */
     public function __construct(RabbitMQClient $client)
     {
         $this->client = $client;
     }
 
     /**
-     * @param string $exchange
-     * @param string $queue
-     * @param string $message
-     * @param array $headers
+     * @param PGSMessage $message
      */
-    public function publish($exchange, $queue, $message, array $headers = [])
+    public function publish(PGSMessage $message)
     {
         $channel = $this->client->getClient()->channel();
-
-        $channel->exchangeDeclare($exchange, ExchangeType::TOPIC, false, true);
-        $channel->queueDeclare($queue);
-
-        $channel->queueBind($queue, $exchange);
-
-        $channel->publish($message, $headers, $exchange, $queue);
+        $channel->exchangeDeclare($message->getExchange(), $message->getExchangeType(), false, true);
+        $channel->publish($message->getBody(), $message->getHeaders(), $message->getExchange(), $message->getRoutingKey());
     }
 }

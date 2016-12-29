@@ -80,6 +80,11 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
             
             $this->get('app.repositories.game_repository')->save($game);
 
+            if($game->getCurrentTaskId() === null) {
+                $game->setCurrentTaskId($task->getId());
+                $this->get('app.repositories.game_repository')->save($game);
+            }
+
             $taskEvent = new TaskEvent($task, $game);
             $this->container->get('event_dispatcher')->dispatch(Events::TASK_CREATED, $taskEvent);
 
@@ -117,25 +122,60 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
         return $this->handleView($this->view($task, Response::HTTP_OK));
     }
 
-    /**
-     * @ApiDoc(
-     *     description="Flip task (not finished)"
-     * )
-     * @param Request $request
-     * @param string $gameId
-     * @param string $taskId
-     */
-    public function patchFlipAction(Request $request, string $gameId, string $taskId): Response
-    {
-        // TODO
-        $game = $this->get('app.repositories.game_repository')->find($gameId);
+    public function patchTaskActiveAction(string $gameId, string $taskId): Response {
+        $gameRepository = $this->get('app.repositories.game_repository');
+        $game = $gameRepository->find($gameId);
 
         if (!$game instanceof Game) {
             throw new NotFoundHttpException();
         }
 
+        $task = $game->getTaskById($taskId);
 
+        if (!$task instanceof Task) {
+            throw new NotFoundHttpException();
+        }
 
+        $game->setCurrentTaskId($task->getId());
+        $gameRepository->save($game);
+
+        $taskEvent = new TaskEvent($task, $game);
+        $this->container->get('event_dispatcher')->dispatch(Events::TASK_ACTIVATED, $taskEvent);
+
+        return $this->handleView($this->view($task, Response::HTTP_OK));
+    }
+
+    /**
+     * @ApiDoc(
+     *     description="Flip task"
+     * )
+     * @param string $gameId
+     * @param string $taskId
+     *
+     * @return Response
+     */
+    public function patchTaskFlipAction(string $gameId, string $taskId): Response
+    {
+        $gameRepository = $this->get('app.repositories.game_repository');
+        $game = $gameRepository->find($gameId);
+
+        if (!$game instanceof Game) {
+            throw new NotFoundHttpException();
+        }
+
+        $task = $game->getTaskById($taskId);
+
+        if (!$task instanceof Task) {
+            throw new NotFoundHttpException();
+        }
+
+        $game->flipTask($taskId);
+        $gameRepository->save($game);
+
+        $taskEvent = new TaskEvent($task, $game);
+        $this->container->get('event_dispatcher')->dispatch(Events::TASK_FLIP, $taskEvent);
+
+        return $this->handleView($this->view($task, Response::HTTP_OK));
     }
     
 }

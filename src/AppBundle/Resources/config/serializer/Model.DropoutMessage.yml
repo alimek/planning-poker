@@ -1,0 +1,11 @@
+AppBundle\Model\DropoutMessage:
+    exclusion_policy: ALL
+    properties:
+        playerID:
+            expose: true
+            type: string
+            serialized_name: playerID
+        gameID:
+            expose: true
+            type: string
+            serialized_name: gameID

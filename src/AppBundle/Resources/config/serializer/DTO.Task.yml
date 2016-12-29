@@ -4,9 +4,15 @@ AppBundle\DTO\Task:
         id:
             expose: true
             type: string
+        status:
+            expose: true
+            type: string
         name:
             expose: true
             type: string
         gameId:
-            exposure: true
+            expose: true
             type: string
+        votes:
+            expose: true
+            type: array<AppBundle\DTO\Vote>

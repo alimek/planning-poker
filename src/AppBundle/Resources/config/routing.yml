@@ -12,3 +12,9 @@ app_player:
     type:     rest
     resource: AppBundle\Controller\PlayersController
     defaults: { _format: json }
+
+
+app_voting:
+    type:     rest
+    resource: AppBundle\Controller\VotesController
+    defaults: { _format: json }

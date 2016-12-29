@@ -2,16 +2,6 @@ services:
     app.util.singularize_inflector:
         class: AppBundle\Util\SingularizeInflector
 
-#    app.util_consumer.task_consumer:
-#        class: AppBundle\Util\Consumer\TaskConsumer
-
-#    app.util_manager.game_manager:
-#        class: AppBundle\Util\Manager\GameManager
-#        arguments:
-#            - '@old_sound_rabbit_mq.game_producer'
-#            - '@app.repositories.game_repository'
-#            - '@serializer'
-
     app.util_client.channel_factory:
         class: AppBundle\Util\Client\ChannelFactory
 
@@ -42,7 +32,21 @@ services:
     app.util_listener.player_subscriber:
         class: AppBundle\Util\Listener\PlayerSubscriber
         arguments:
-          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
           - '@jms_serializer.serializer'
+          - '@pgs_rabbit_mq.service.rabbit_mqpublisher'
+          - '@app.repositories.player_repository'
         tags:
             - { name: kernel.event_subscriber }
+    app.util_service.dropout_message_consumer:
+        class: AppBundle\Util\Service\DropoutMessageConsumerService
+        arguments:
+          - '@app.repositories.game_repository'
+          - '@app.repositories.player_repository'
+          - '@fos_rest.serializer'
+          - '@event_dispatcher'
+
+    dropout_consumer:
+        alias: 'app.util_service.dropout_message_consumer'
+
+    app.util_service.results:
+        class: AppBundle\Util\Service\ResultsService

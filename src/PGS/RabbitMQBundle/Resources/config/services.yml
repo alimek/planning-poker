@@ -11,3 +11,8 @@ services:
     class: PGS\RabbitMQBundle\Service\RabbitMQPublisher
     arguments:
       - '@pgs_rabbit_mq.service.rabbit_mqclient'
+
+  pgs_rabbit_mq.service.rabbit_mqconsumer:
+    class: PGS\RabbitMQBundle\Service\RabbitMQConsumer
+    arguments:
+      - '@pgs_rabbit_mq.service.rabbit_mqclient'

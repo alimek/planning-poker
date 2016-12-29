@@ -17,3 +17,5 @@ AppBundle\Document\Player:
             type: string
         email:
             type: string
+        offline:
+            type: boolean

@@ -21,11 +21,11 @@ class PlayerRepository extends DocumentRepository
     }
 
     /**
-     * @param Player $task
+     * @param Player $player
      */
-    public function save(Player $task)
+    public function save(Player $player)
     {
-        $this->getDocumentManager()->persist($task);
+        $this->getDocumentManager()->persist($player);
         $this->getDocumentManager()->flush();
     }
 }

@@ -10,6 +10,9 @@ AppBundle\Document\Game:
         status:
             expose: true
             type: string
+        currentTaskId:
+            expose: true
+            type: string
         tasks:
             expose: true
             type: array<AppBundle\Document\Task>

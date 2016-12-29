@@ -3,6 +3,7 @@
 namespace AppBundle\Repositories;
 
 use AppBundle\Document\Game;
+use AppBundle\Document\Task;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class GameRepository extends DocumentRepository
@@ -37,5 +38,20 @@ class GameRepository extends DocumentRepository
         $task = $query->getSingleResult();
 
         return $task;
+    }
+
+    /**
+     * @param string $gameId
+     *
+     * @return null|Game
+     */
+    public function getGame(string $gameId) {
+        $qb = $this->createQueryBuilder();
+
+        $query = $qb
+            ->field('id')->equals($gameId)
+            ->limit(1)
+            ->getQuery();
+        return $query->getSingleResult();
     }
 }

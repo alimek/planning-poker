@@ -13,3 +13,6 @@ AppBundle\Document\Player:
         email:
             expose: true
             type: string
+        offline:
+            expose: true
+            type: boolean

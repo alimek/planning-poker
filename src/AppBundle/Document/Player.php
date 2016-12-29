@@ -26,6 +26,11 @@ class Player
     private $email;
 
     /**
+     * @var bool
+     */
+    private $offline;
+
+    /**
      * @param string $guid
      * @param string $name
      * @param string $email
@@ -35,6 +40,7 @@ class Player
         $this->guid = $guid;
         $this->name = $name;
         $this->email = $email;
+        $this->offline = false;
     }
 
     /**
@@ -76,5 +82,21 @@ class Player
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOffline(): bool
+    {
+        return $this->offline;
+    }
+
+    /**
+     * @param bool $offline
+     */
+    public function setOffline(bool $offline)
+    {
+        $this->offline = $offline;
     }
 }

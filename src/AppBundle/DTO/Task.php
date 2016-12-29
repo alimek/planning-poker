@@ -13,6 +13,11 @@ class Task
     /**
      * @var string
      */
+    private $status;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
@@ -21,15 +26,23 @@ class Task
     private $gameId;
 
     /**
+     * @var Vote[]
+     */
+    private $votes;
+
+    /**
      * @param string $id
      * @param string $name
      * @param string $gameId
+     * @param string $status
      */
-    private function __construct(string $id, string $name, string $gameId)
+    private function __construct(string $id, string $name, string $gameId, string $status)
     {
         $this->id = $id;
         $this->name = $name;
         $this->gameId = $gameId;
+        $this->votes = [];
+        $this->status = $status;
     }
 
     /**
@@ -39,7 +52,16 @@ class Task
      */
     public static function createFromEvent(TaskEvent $event): Task
     {
-        return new self($event->getTask()->getId(), $event->getTask()->getName(), $event->getGame()->getId());
+        $eventTask = $event->getTask();
+        $eventGame = $event->getGame();
+
+        $task = new self($eventTask->getId(), $eventTask->getName(), $eventGame->getId(), $eventTask->getStatus());
+
+        foreach($eventGame->getTaskById($eventTask->getId())->getVotes() as $vote) {
+            $task->votes[] = Vote::createFromValueAndPlayer($vote->getValue(), $vote->getPlayer());
+        }
+
+        return $task;
     }
 
 }

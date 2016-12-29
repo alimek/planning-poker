@@ -47,8 +47,8 @@ class Game
     {
         $this->name = $name;
         $this->status = Game::STATUS_NEW;
-        $this->players = new ArrayCollection();
-        $this->tasks = new ArrayCollection();
+        $this->players = [];
+        $this->tasks = [];
     }
 
     /**
@@ -79,7 +79,7 @@ class Game
     /**
      * @return ArrayCollection
      */
-    public function getPlayers(): ArrayCollection
+    public function getPlayers()
     {
         return $this->players;
     }
@@ -98,9 +98,18 @@ class Game
     }
 
     /**
+     * @param Player $player
+     */
+    public function removePlayer(Player $player) {
+        if($this->players->contains($player)) {
+            $this->players->removeElement($player);
+        }
+    }
+
+    /**
      * @return ArrayCollection
      */
-    public function getTasks(): ArrayCollection
+    public function getTasks()
     {
         return $this->tasks;
     }
@@ -128,18 +137,22 @@ class Game
         })->first();
     }
 
+    public function flipTask(string $taskId) {
+        $this->getTaskById($taskId)->setStatus(Task::STATUS_FLIPED);
+    }
+
     /**
      * @return string
      */
-    public function getCurrentTaskId(): string
+    public function getCurrentTaskId()
     {
         return $this->currentTaskId;
     }
 
     /**
-     * @param Task $currentTaskId
+     * @param string $currentTaskId
      */
-    public function setCurrentTaskId(Task $currentTaskId)
+    public function setCurrentTaskId(string $currentTaskId)
     {
         $this->currentTaskId = $currentTaskId;
     }

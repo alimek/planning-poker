@@ -9,6 +9,7 @@ use AppBundle\Event\PlayerEvent;
 use AppBundle\Events;
 use AppBundle\Form\GameType;
 use AppBundle\Model;
+use AppBundle\Event\PlayerStatusChangedEvent;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -156,6 +157,9 @@ class GamesController extends FOSRestController implements ClassResourceInterfac
 
         $game->addPlayer($player);
         $this->get('app.repositories.game_repository')->save($game);
+
+        $playerStatusChangedEvent = PlayerStatusChangedEvent::createFromPlayer($player);
+        $this->container->get('event_dispatcher')->dispatch(Events::PLAYER_ONLINE, $playerStatusChangedEvent);
 
         $playerEvent = new PlayerEvent($player, $game);
         $this->container->get('event_dispatcher')->dispatch(Events::PLAYER_JOINED_GAME, $playerEvent);

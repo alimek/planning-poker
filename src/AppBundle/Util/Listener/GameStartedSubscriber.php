@@ -4,6 +4,7 @@ namespace AppBundle\Util\Listener;
 use AppBundle\Event\GameEvent;
 use AppBundle\Events;
 use JMS\Serializer\Serializer;
+use PGS\RabbitMQBundle\Publisher\PGSMessage;
 use PGS\RabbitMQBundle\Service\RabbitMQPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -43,10 +44,7 @@ class GameStartedSubscriber implements EventSubscriberInterface
      */
     public function onGameStarted(GameEvent $event)
     {
-        $this->publisher->publish(
-            'poker',
-            'game.started',
-            $this->serializer->serialize($event->getGame(), 'json')
-        );
+        $message = PGSMessage::createTopicMessage($this->serializer->serialize($event->getGame(), 'json'), 'poker', 'game.started');
+        $this->publisher->publish($message);
     }
 }

@@ -3,10 +3,9 @@ AppBundle\Document\Vote:
     fields:
         id:
             id:  true
-        player:
-            type: string
         value:
             type: integer
-    embedOne:
-        task:
-            type: Task
+    referenceOne:
+        player:
+            targetDocument: AppBundle\Document\Player
+            cascade: all

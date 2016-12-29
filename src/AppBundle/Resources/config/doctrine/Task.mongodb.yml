@@ -1,7 +1,13 @@
 AppBundle\Document\Task:
+    repositoryClass: AppBundle\Repositories\TaskRepository
     type: embeddedDocument
     fields:
         id:
             id:  true
         name:
             type: string
+        status:
+            type: string
+    embedMany:
+        votes:
+            targetDocument: AppBundle\Document\Vote

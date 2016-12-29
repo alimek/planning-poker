@@ -5,12 +5,12 @@ namespace AppBundle\Util\Listener;
 use AppBundle\Event\GameEvent;
 use AppBundle\Events;
 use JMS\Serializer\Serializer;
+use PGS\RabbitMQBundle\Publisher\PGSMessage;
 use PGS\RabbitMQBundle\Service\RabbitMQPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GameCreatedSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var RabbitMQPublisher
      */
@@ -45,10 +45,7 @@ class GameCreatedSubscriber implements EventSubscriberInterface
      */
     public function onGameCreated(GameEvent $event)
     {
-        $this->publisher->publish(
-            'poker',
-            'game.created',
-            $this->serializer->serialize($event->getGame(), 'json')
-        );
+        $message = PGSMessage::createTopicMessage($this->serializer->serialize($event->getGame(), 'json'), 'poker', 'game.created');
+        $this->publisher->publish($message);
     }
 }

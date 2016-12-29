@@ -15,17 +15,22 @@ class Vote
     protected $player;
 
     /**
-     * @var Task
-     */
-    protected $task;
-
-    /**
      * @var int
      */
     protected $value;
 
     /**
-     * @return string
+     * @param Player $player
+     * @param int $value
+     */
+    public function __construct(Player $player, $value)
+    {
+        $this->player = $player;
+        $this->value = $value;
+    }
+
+    /**
+     * @return Player
      */
     public function getPlayer()
     {
@@ -38,22 +43,6 @@ class Vote
     public function setPlayer($player)
     {
         $this->player = $player;
-    }
-
-    /**
-     * @return Task
-     */
-    public function getTask()
-    {
-        return $this->task;
-    }
-
-    /**
-     * @param Task $task
-     */
-    public function setTask($task)
-    {
-        $this->task = $task;
     }
 
     /**

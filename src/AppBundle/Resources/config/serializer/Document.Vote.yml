@@ -1,0 +1,9 @@
+AppBundle\Document\Vote:
+    exclusion_policy: ALL
+    properties:
+      value:
+        expose: true
+        type: string
+      player:
+        expose: true
+        type: AppBundle\Document\Player

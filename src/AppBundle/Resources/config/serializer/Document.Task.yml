@@ -7,3 +7,9 @@ AppBundle\Document\Task:
         name:
             expose: true
             type: string
+        status:
+            expose: true
+            type: string
+        votes:
+            expose: true
+            type: array<AppBundle\Document\Vote>
