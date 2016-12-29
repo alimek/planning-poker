@@ -1,0 +1,19 @@
+AppBundle\Document\Player:
+    repositoryClass: AppBundle\Repositories\PlayerRepository
+    collection: player
+    indexes:
+        guidIndex:
+            keys:
+                guid: desc
+            options:
+                unique: true
+                safe: true
+    fields:
+        id:
+            id:  true
+        guid:
+            type: string
+        name:
+            type: string
+        email:
+            type: string

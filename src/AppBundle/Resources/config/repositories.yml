@@ -13,3 +13,11 @@ services:
             - 'getRepository'
         arguments:
             - 'AppBundle\Document\Task'
+
+    app.repositories.player_repository:
+        class: AppBundle\Repositories\PlayerRepository
+        factory:
+            - '@doctrine_mongodb.odm.default_document_manager'
+            - 'getRepository'
+        arguments:
+            - 'AppBundle\Document\Player'

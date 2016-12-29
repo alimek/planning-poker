@@ -3,7 +3,6 @@
 namespace AppBundle\Document;
 
 use AppBundle\Model\Game as GameModel;
-use AppBundle\Model\Player;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Game
@@ -48,6 +47,8 @@ class Game
     {
         $this->name = $name;
         $this->status = Game::STATUS_NEW;
+        $this->players = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     /**
@@ -88,7 +89,12 @@ class Game
      */
     public function addPlayer(Player $player)
     {
-        $this->players->add($player);
+        if (!$this->players->exists(function ($key, $element) use ($player) {
+            return $player->getGuid() === $element->getGuid();
+        })
+        ) {
+            $this->players->add($player);
+        }
     }
 
     /**

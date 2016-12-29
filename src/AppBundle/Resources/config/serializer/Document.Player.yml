@@ -1,4 +1,4 @@
-AppBundle\Document\Game:
+AppBundle\Document\Player:
     exclusion_policy: ALL
     properties:
         id:
@@ -7,12 +7,9 @@ AppBundle\Document\Game:
         name:
             expose: true
             type: string
-        status:
+        guid:
             expose: true
             type: string
-        tasks:
+        email:
             expose: true
-            type: array<AppBundle\Document\Task>
-        players:
-            expose: true
-            type: array<AppBundle\Document\Player>
+            type: string

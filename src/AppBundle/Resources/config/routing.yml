@@ -7,3 +7,8 @@ app_task:
     type:     rest
     resource: AppBundle\Controller\TasksController
     defaults: { _format: json }
+
+app_player:
+    type:     rest
+    resource: AppBundle\Controller\PlayersController
+    defaults: { _format: json }
