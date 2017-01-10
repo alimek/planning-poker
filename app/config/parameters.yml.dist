@@ -19,10 +19,10 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     mongodb.database:  planningpoker
-    mongodb.server:    mongodb://localhost:27017
+    mongodb.server:    mongodb://mongodb:27017
 
-    rabbitmq.host:     'spotted-monkey.rmq.cloudamqp.com'
+    rabbitmq.host:     rabbitmq
     rabbitmq.port:     5672
-    rabbitmq.user:     'fjnfmkuv'
-    rabbitmq.password: ~
-    rabbitmq.vhost:    'fjnfmkuv'
+    rabbitmq.user:     poker
+    rabbitmq.password: poker
+    rabbitmq.vhost:    /
