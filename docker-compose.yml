@@ -1,14 +1,5 @@
 version: "2"
 services:
-  web:
-    build: docker/nginx
-    ports:
-      - "8088:80"
-    links:
-      - php
-    volumes_from:
-      - container:scrumpoker-sync:rw
-
   php:
     build: docker/php-fpm
     volumes_from:
@@ -18,6 +9,15 @@ services:
       - mongodb
       - rabbitmq
 
+  web:
+    build: docker/nginx
+    ports:
+      - "8088:80"
+    links:
+      - php
+    volumes_from:
+      - container:scrumpoker-sync:rw
+
   mongodb:
     image: mongo
     ports:
@@ -25,10 +25,10 @@ services:
 
   rabbitmq:
     build: docker/rabbitmq
+    container_name: poker_rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
-
 
 volumes:
   scrumpoker-sync:

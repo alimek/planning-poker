@@ -5,7 +5,15 @@ RUN docker-php-ext-install pdo zip bcmath
 RUN pecl install mongodb
 RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/20-mongodb.ini
 
-RUN wget https://getcomposer.org/composer.phar && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
+
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+RUN "date"
+
 RUN docker-php-ext-install sockets
 
 WORKDIR /app
+
+CMD ["php-fpm"]

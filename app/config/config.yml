@@ -96,7 +96,7 @@ nelmio_cors:
         ^/:
 
 pgs_rabbit_mq:
-    host: '%rabbitmq.host%:%rabbitmq.port%'
+    host: '%rabbitmq.host%'
     vhost: '%rabbitmq.vhost%'
     user: '%rabbitmq.user%'
     password: '%rabbitmq.password%'
