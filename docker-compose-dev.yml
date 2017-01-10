@@ -1,0 +1,30 @@
+web:
+  build: docker/nginx
+  ports:
+    - "8088:80"
+  links:
+    - php
+  volumes:
+    - ./:/app
+
+php:
+  build: docker/php-fpm
+  volumes:
+    - ./:/app
+  working_dir: /app
+  links:
+    - mongodb
+    - rabbitmq
+
+mongodb:
+  image: mongo
+  volumes:
+      - ./:/app
+  ports:
+  - "27017:27017"
+
+rabbitmq:
+  build: docker/rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
