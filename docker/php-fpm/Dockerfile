@@ -16,4 +16,7 @@ RUN docker-php-ext-install sockets
 
 WORKDIR /app
 
+RUN usermod -u 5000 www-data
+RUN chown -R www-data:www-data /app
+
 CMD ["php-fpm"]
