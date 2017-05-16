@@ -90,7 +90,7 @@ class Task
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Vote[]
      */
     public function getVotes()
     {

@@ -36,7 +36,7 @@ syncs:
     src: './'
 
     # which destination on the sync-container. Since you will use volumes_from to mount this, this should match your code-deployment location in the real container
-    dest: '/app'
+    #dest: '/app'
 
     # when a port of a container is exposed, on which IP does it get exposed. Localhost for docker for mac, something else for docker-machine
     sync_host_ip: '127.0.0.1'

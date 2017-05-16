@@ -47,7 +47,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * test
      * @depends it_has_name
      */
     public function it_can_be_converted_to_Document_Game()
@@ -58,7 +58,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * test
      * @depends it_can_be_converted_to_Document_Game
      */
     public function it_passes_name_to_Document_Game()
