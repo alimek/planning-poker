@@ -45,7 +45,7 @@ syncs:
     sync_host_port: 10871
 
     # optional, a list of excludes for rsync - see rsync docs for details
-    sync_excludes: ['composer.json' , '.gitignore', '.git/', 'var']
+    sync_excludes: ['.gitignore', '.git/', 'var']
 
     # use this to change the exclude syntax.
     # Path: you match the exact path ( nesting problem )
